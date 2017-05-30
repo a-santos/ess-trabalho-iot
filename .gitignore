@@ -87,3 +87,6 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# Visual Studio Code - text editor usado pelo Afonso (aconselho!)
+.vscode

@@ -1,3 +1,6 @@
+# Criar e ficar à escuta de num socket
+# @status: ok 
+
 import socket
 
 HOST = ''              # Endereco IP do Servidor
