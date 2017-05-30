@@ -1,0 +1,42 @@
+﻿// DADOS SD PARA TRABALHO 
+
+
+user pi- pi / pass2pi
+user root- root / pass2root
+VNC- pass2vnc
+phpmyadmin / pass2php
+MySQL / pass2mysql
+
+
+MAC wlan0- 
+MAC eth0- b8:27:eb:69:b2:d3
+
+
+_______________________________________
+# INSTALADO (22/03/2017)
+
+teclado PT
+time-zone Lisboa
+$ sudo apt-get update && apt-get upgrade	
+
+pass alterada: user & root
+
+bloquear acesso SSH pelo root:
+	$ cd /etc/ssh
+	$ sudo nano sshd_config
+		PermitRootLogin no
+		Control + O  (gravar alteração)
+	$ sudo service ssh restart
+
+ativar serviço SSH no arranque
+$ sudo systemctl enable ssh.socket
+
+tightvncserver (só configurei password)
+
+samba (ñ configurei)
+
+(Gonçalo) Apache2 + PHP + MySQL
+
+
+
+

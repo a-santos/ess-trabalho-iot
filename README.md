@@ -1,8 +1,11 @@
-# Trabalho da UC de ESS
+# ESS - TRABALHO II - 2017 #
 
-- @Curso: IPLeiria - Eng. Informática
-- @Ano: 3º
-- @Ramo: TI
-- @UC: ESS
+* Curso: Eng. Informática - IPLeiria
+* UC: ESS
+* Ramo: TI
 
-- @Trabalho para protótipo de solução IoT
+
+### Desenvolvido por ### 
+* Afonso Santos
+* Gonçalo Santos
+* Pedro Nascimento
