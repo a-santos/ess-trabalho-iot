@@ -1,6 +1,7 @@
 /** 
-@info: Sensor Magnético para Porta/ Janela
-@status: ok
+@ info: Sensor Magnético para Porta/ Janela
+@ material: Node, sensor magnético
+@ status: ok
 */
 
 /** 

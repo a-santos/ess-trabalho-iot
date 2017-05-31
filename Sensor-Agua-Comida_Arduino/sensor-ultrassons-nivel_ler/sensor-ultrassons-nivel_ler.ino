@@ -1,9 +1,8 @@
 /** 
-@info: Programa para medir nível da água e quantidade de comida 
+@ info: Programa para medir nível da água e quantidade de comida 
     (cód. IFTTT comentado) 
-@status: testar
-    configurar qd cd sensor lê (e imprime valores)
-    Água- no arranque, ñ mostrar 'mudou'
+@ material: Arduino, sensor de nível, sensor de ultrassons
+@ status: ok
 */
 
 /** 
@@ -12,8 +11,8 @@ LIGAÇÕES: -> Arduino Uno
 GND -> breadboard
 Pin A1 -> HC-SR04 
 Pin A0/S -> sensor de nível 
--Pin 8 -> PIN_LED_AGUA Vermelho (Água)    // + R.180 Ohm
--Pin 9 -> PIN_LED_AGUA Verde (Comida)
+Pin 8 + R.180 Ohm -> PIN_LED_AGUA Vermelho         
+Pin 11 + R.180 Ohm -> PIN_LED_AGUA Verde 
 
 --> Sensor ultrassons HC-SR04
 VCC -> 5V 
@@ -36,31 +35,31 @@ const char* API_KEY = "jcmug3BB7gFhv9eMvzRLXuvEuNmm1Le8xZWOgmG-LSY";     // key 
 const char* AGUA_ESTADO = "Animal com sede";
 
 const int PIN_LED_AGUA = 8; 
-const int PIN_LED_COMIDA = 9;  
+const int PIN_LED_COMIDA = 11;  
 
 // Variáveis para sensor de nível de água
-const int PIN_SENSOR_NIVEL = A0;  // level sensor connected to an analog port
-int val = 0;                      // define a variable val initial value of 0    
-int data = 0;                     // define a variable data initial value of 0
-int dataPercent = 0;
+const int PIN_SENSOR_NIVEL = A0;  
+int val = 0;                        
+int data = 0;                    
 int newValAgua = 0;
 int oldValAgua = 0;
+int percentAgua = 0;
 
 // Variáveis para sensor de distância de comida
-const int PIN_TRIG = 3;
-const int PIN_ECHO = 5;
-const int VEL_ULTRASSONS_AR = 343;    // vel. propagação dos ultrassons no ar = 343 m/s
+const int PIN_US_TRIG = 3;
+const int PIN_US_ECHO = 5;
+const int VEL_US_AR = 343;        // vel. propagação dos ultrassons no ar = 343 m/s
 
 void setup() {
-  Serial.begin(9600);       // definir a vel. de comunicação na porta consola
+  Serial.begin(9600);             // definir a vel. de comunicação na porta consola
   
   pinMode(PIN_LED_AGUA, OUTPUT); 
   pinMode(PIN_LED_COMIDA, OUTPUT);
   
-  pinMode(PIN_TRIG, OUTPUT);
-  pinMode(PIN_ECHO, INPUT);
+  pinMode(PIN_US_TRIG, OUTPUT);
+  pinMode(PIN_US_ECHO, INPUT);
   
-  digitalWrite(PIN_TRIG, LOW);
+  digitalWrite(PIN_US_TRIG, LOW);
   delayMicroseconds(2);
 }
 
@@ -68,48 +67,63 @@ void loop() {
   long duration = 0;
   float distance = 0.0;
 
-  digitalWrite(PIN_TRIG, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(PIN_TRIG, LOW);
-
-  duration = pulseIn(PIN_ECHO, HIGH);
-  //Serial.print(duration); //
-  //Serial.println(" Microssegundos");
-
   // ********************** Água - Ler nível ********************** 
-  val = analogRead(PIN_SENSOR_NIVEL);     // read the analog value to the variable val
-  if (val > 700) {                        // determine whether more than 700 variables val
+  val = analogRead(PIN_SENSOR_NIVEL);     
+  if (val > 700) {                        
       digitalWrite(PIN_LED_AGUA, HIGH); 
   }
   else {
-    digitalWrite(PIN_LED_AGUA, LOW);      // when variable val is less than 700 , the lamp goes out piranha
+    digitalWrite(PIN_LED_AGUA, LOW);      
   }
 
   // ********************** Água - Calc. percentagem ********************** 
-  data = val;                             // variable is assigned to the variable data val
-  dataPercent = (data * 100) / 400;
+  data = val;                           
+  percentAgua = (data * 100) / 400;
 
-  // Cálculo da distância em cm
-  distance = (((float)duration * (float)VEL_ULTRASSONS_AR) / 2.0) / 10000.0;
+  // ********************** Comida - Ler distância **********************
+  digitalWrite(PIN_US_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PIN_US_TRIG, LOW);
 
-  // ********************** Água - Mostrar no terminal valores ********************** 
-  Serial.print("Valor da Água: ");
-  Serial.println(data);                   
-  Serial.print("Percentagem da Água: ");
-  Serial.println(dataPercent);
+  duration = pulseIn(PIN_US_ECHO, HIGH);
+  //Serial.print(duration); //
+  //Serial.println(" Microssegundos");
 
-  // ********************** Comida - Mostrar no terminal valores **********************
+  distance = (((float)duration * (float)VEL_US_AR) / 2.0) / 10000.0;    // cálculos para mostrar em 'cm'
+
+  delay(500);
+
+  
+
+  // ********************** Água - Mostrar valores no terminal ********************** 
   Serial.println("");
-  Serial.print("Distancia para a comida: ");
+  Serial.print("[AGUA] Valor: ");
+  Serial.println(data);                   
+  Serial.print("[AGUA] Percentagem: ");
+  Serial.println(percentAgua);
+  if (percentAgua > 30) {
+    Serial.println("[AGUA] Nivel alto");
+    digitalWrite(PIN_LED_AGUA, LOW); 
+    newValAgua = 0;
+  }
+  else {
+    Serial.println("[AGUA] Nivel baixo");
+    digitalWrite(PIN_LED_AGUA, HIGH); 
+    newValAgua = 1;
+  }
+    
+  // ********************** Comida - Mostrar valores no terminal **********************
+  Serial.println("");
+  Serial.print("[COMIDA] Distancia: ");
   Serial.print(distance); 
   Serial.println(" cm");
   if (distance >= 10) {
-    //digitalWrite(PIN_LED_AGUA, HIGH);
-    Serial.println("Aviso: Pouca comida");
+    Serial.println("[COMIDA] Quantidade insuficiente");
+    digitalWrite(PIN_LED_COMIDA, HIGH); 
   }
   else {
-    //digitalWrite(PIN_LED_AGUA, LOW);
-    Serial.println("Comida suficiente");
+    Serial.println("[COMIDA] Quantidade suficiente");
+    digitalWrite(PIN_LED_COMIDA, LOW); 
   }
   
   // Ligação à porta 80 HTTP
@@ -119,13 +133,15 @@ void loop() {
     return;
   }*/
   
-  if (dataPercent > 30) {
+  /*if (percentAgua > 30) {
     Serial.println("O nivel esta alto");
+    digitalWrite(PIN_LED_COMIDA, LOW); 
     newValAgua = 0;
   }
   else {
-    newValAgua = 1;
     Serial.println("nivel baixo");
+    digitalWrite(PIN_LED_COMIDA, HIGH); 
+    newValAgua = 1;*/
 
     /*
     String url = "/trigger/water_empty/with/key/";
@@ -138,12 +154,11 @@ void loop() {
                 "Host: " + HOST + "\r\n" + 
                 "Content-Type: application/x-www-form-urlencoded\r\n" + 
                 "Content-Length: 13\r\n\r\n" +
-                "value1=" + water_empty + "\r\n");    */               
-  }
+                "value1=" + water_empty + "\r\n");                  
+  }*/ 
 
   // ********************** Água - Mostra se valor atual é diferente do anterior **********************
-  /*
-  if (newValAgua != oldValAgua) {      
+  /*if (newValAgua != oldValAgua) {      
     Serial.println("MUDOU");
     Serial.println("");
     oldValAgua = newValAgua;
@@ -153,7 +168,5 @@ void loop() {
     Serial.println("");   
   }*/
 
-  delay(3000);   
+  delay(4000);   
 }
-
-

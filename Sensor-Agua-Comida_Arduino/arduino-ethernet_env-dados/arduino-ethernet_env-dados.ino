@@ -1,23 +1,11 @@
-/*  ********** Trab. ESS **********
-  @status: -
-  @versao: https://www.arduino.cc/en/Tutorial/WebClient
+/** 
+@ info: Programa para medir nível da água e quantidade de comida 
+    (cód. IFTTT comentado) 
+@ material: Arduino, shield Ethernet, sensor de nível, sensor de ultrassons
+@ status: test
+    configurar qd cd sensor lê (e imprime valores)
+    https://www.arduino.cc/en/Tutorial/WebClient
 */
-
-/*
-  Web client
-
- This sketch connects to a website (http://www.google.com)
- using an Arduino Wiznet Ethernet shield.
-
- Circuit:
- * Ethernet shield attached to pins 10, 11, 12, 13
-
- created 18 Dec 2009
- by David A. Mellis
- modified 9 Apr 2012
- by Tom Igoe, based on work by Adrian McEwen
-
- */
 
 #include <SPI.h>
 #include <Ethernet.h>
