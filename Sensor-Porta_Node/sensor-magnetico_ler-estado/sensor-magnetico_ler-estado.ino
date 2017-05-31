@@ -14,11 +14,11 @@ LIGAÇÕES: NodeMCU
 - (cabo peq)    -> 3V (ou 5?)
 
 Links: http://iot-playground.com/blog/2-uncategorised/72-esp8266-wifi-door-window-sensor-easyiot-cloud-rest-api
-  http://iot-playground.com/blog/2-uncategorised/91-esp8266-wifi-door-window-sensor-easyiot-cloud-rest-api-v1-0
+      http://iot-playground.com/blog/2-uncategorised/91-esp8266-wifi-door-window-sensor-easyiot-cloud-rest-api-v1-0
 */
 
-int newVal =0;
-int oldVal =0;
+int newVal = 0;
+int oldVal = 0;
 
 void setup() {
   //Iniciar a porta Serie para Debug
