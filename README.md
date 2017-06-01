@@ -6,6 +6,6 @@
 
 
 ### Desenvolvido por ### 
-* Afonso Santos
-* Gonçalo Santos
-* Pedro Nascimento
+* Gonçalo Santos - 2120657
+* Afonso Santos - 2130653
+* Pedro Nascimento - 2131242

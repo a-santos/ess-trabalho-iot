@@ -1,29 +1,42 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Consoante os dados, comunica com IFTTT
-# @status: test
-#       criar recipe IFTTT q envia notific. p telm
+# @status: test - env os 2 pedidos?
 #       fz 2 envios diferentes (água, comida)
 #       optimizar: só enviar qd != do val. anterior
 
+# IFTTT: Applet title- Pet food level
+#        Event name- pouca_comida
+
 import requests
 
-host = "maker.ifttt.com";
-apiKey = "";                    # key da recipe do Afonso
+url_recipe_water = 'https://maker.ifttt.com/trigger/pouca_agua//with/key/kdNe6V0RbYlqgbWc8q5sCXp9aFcW-hpAyhTclW_VD21';
+url_recipe_food = 'https://maker.ifttt.com/trigger/pouca_comida/with/key/mpVubn3K94tvrEG1vKYnk8E0OuvGWSt3u2czfTs_aH9';
+#apiKey = 'dh0w-_fzIG-x02VrAHNnpa';       # key da recipe do Pedro
+valueWater = 0
+valueFood = 0
 
-int valor = 0;
+#url_host_recipe += apiKey
 
-url_recipe = '/trigger/door_status/with/key/'
-url_recipe += apiKey
-
-# se valor == 0, n faz nada
-
-valor = 1
-# se valor == 1, envia p. IFTTT
-sendIfttt(valor)
-
-def sendIfttt(valor):
-    print('A enviar para IFTTT... Requesting URL: %s' + url_recipe)
+def sendWaterIfttt(valueWater):
+    print('Pouca ÁGUA! A enviar request para IFTTT: ' + url_recipe_water)
 
     report = {}
-    report["value1"] = valor
-    requests.post("https://maker.ifttt.com/trigger/**NAME-OF-CHANNEL/with/key/**ID-KEY", 
-        data = report)   
+    report["value1"] = valueWater
+    requests.post(url_recipe_water, data = report)
+
+def sendFoodIfttt(valueFood):
+    print('Pouca COMIDA! A enviar request para IFTTT: ' + url_recipe_food)
+
+    report = {}
+    report["value1"] = valueFood
+    requests.post(url_recipe_food, data = report)
+
+# se valueWater == 1, envia p. IFTTT
+valueWater = 1
+sendWaterIfttt(valueWater)   
+
+# se valueFood == 1, envia p. IFTTT
+valueFood = 1
+sendFoodIfttt(valueFood)        
