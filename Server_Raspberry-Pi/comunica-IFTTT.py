@@ -1,36 +1,29 @@
 # Consoante os dados, comunica com IFTTT
-# @status: inc
+# @status: test
+#       criar recipe IFTTT q envia notific. p telm
+#       fz 2 envios diferentes (água, comida)
+#       optimizar: só enviar qd != do val. anterior
+
+import requests
 
 host = "maker.ifttt.com";
-apiKey = "dh0w-_fzIG-x02VrAHNnpa";     # key da recipe do Pedro
+apiKey = "";                    # key da recipe do Afonso
 
 int valor = 0;
 
-# se valor == 0, n faz nada
-valor = 1
-
-# se valor == 1, envia p. IFTTT
 url_recipe = '/trigger/door_status/with/key/'
 url_recipe += apiKey
 
-print('Requesting URL: %s' + url_recipe)
-# Enviar pedido para IFTTT
-abc('POST ') + url + ' HTTP/1.1\r\n' +
-        'Host: ' + host + '\r\n' + 
-        'Content-Type: application/x-www-form-urlencoded\r\n' + 
-        'Content-Length: 13\r\n\r\n' +
-        'value1 = ' + door_state + '\r\n'
+# se valor == 0, n faz nada
 
+valor = 1
+# se valor == 1, envia p. IFTTT
+sendIfttt(valor)
 
-    #String url = "/trigger/door_status/with/key/";
-    #url += apiKey;
-    #//Serial.println(host);
-          
-    #Serial.print("Requesting URL: ");
-    #Serial.println(url);
-    #client.print(String("POST ") + url + " HTTP/1.1\r\n" +
-          #"Host: " + host + "\r\n" + 
-          #"Content-Type: application/x-www-form-urlencoded\r\n" + 
-          #"Content-Length: 13\r\n\r\n" +
-          #"value1=" + door_state + "\r\n");    
+def sendIfttt(valor):
+    print('A enviar para IFTTT... Requesting URL: %s' + url_recipe)
 
+    report = {}
+    report["value1"] = valor
+    requests.post("https://maker.ifttt.com/trigger/**NAME-OF-CHANNEL/with/key/**ID-KEY", 
+        data = report)   
