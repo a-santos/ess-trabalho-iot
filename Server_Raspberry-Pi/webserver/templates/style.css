@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+
+
+header {
+    text-align: center;
+
+}
+
+h1 {
+    text-align: center;
+    color: blue;
+}
+
+h2 {
+    text-align: center;
+}
+
+h3 {
+    text-align: center;
+}
+
+
+.blocob1{
+    text-align: center;
+    margin: auto;
+    right: 0px;
+    width: 300px;
+    padding: 20px;
+    border: 3px solid black;
+    border-radius: 10px;
+    margin: 0 auto;
+}
+
+
+.blocoAlerta {
+    padding: 15px 500px;
+    font-weight: bolder;
+    color: red;
+
+}
+
+
+
+
