@@ -1,0 +1,20 @@
+// LISTA MATERIAL
+
+NodeMCU
++ sensor magnético
+
+Arduino Uno + shield Ethernet
++ sensor de nível de água
++ sensor de ultrassons
+
+Módulo de câmara Raspberry Pi
+
+
+
+# INTERFACES
+Arduino: MAC eth0: 90-A2-DA-0D-AC-E4
+
+
+______________________________________________
+// BIBLIOTECAS
+

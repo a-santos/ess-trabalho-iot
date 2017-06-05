@@ -1,10 +1,7 @@
 @charset "UTF-8";
 
-
-
 header {
     text-align: center;
-
 }
 
 h1 {
@@ -20,7 +17,6 @@ h3 {
     text-align: center;
 }
 
-
 .blocob1{
     text-align: center;
     margin: auto;
@@ -32,14 +28,8 @@ h3 {
     margin: 0 auto;
 }
 
-
 .blocoAlerta {
     padding: 15px 500px;
     font-weight: bolder;
     color: red;
-
 }
-
-
-
-

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # @ info: Criação de 1 broker MQTT para receber e publicar dados vindos do NodeMCU
 # @ status: ok 
 
