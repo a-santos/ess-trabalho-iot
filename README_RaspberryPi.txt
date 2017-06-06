@@ -1,32 +1,33 @@
 // INFO
 
 # PASTAS NO SERVER
-$ /home/pi/ess_trab_webserver   			(plataforma web)
+$ /var/www/html   							(plataforma web)
 $ /home/pi/ess_trab_server  				(scripts do server: broker MQTT, sockets, envia IFTTT)
-
+$ /home/pi/ess_trab_data  					(onde são guardados enviados pelos sensores)
+$ /home/pi/ess_trab_server/twitter_post  	(portar no Twitter)
 
 # NETWORKS
 SSID: droid_wlan / WlanDr01d16
 
 # SITES
+URL da plataforma: http://192.168.1.78/index.html         (rede Afonso)
 Repositório: https://github.com/a-santos/ess-trabalho-iot
-Twitter: https://twitter.com/desmondd_io  
+** Twitter: https://twitter.com/desmondd_io  
 
 # INTERFACES
 MAC wlan0: ?
 MAC eth0: b8:27:eb:69:b2:d3
 
 # USERS 
-pi, root
+root, afonso, pi
 VNC
 phpmyadmin 
 MySQL
 
 # CRONTAB:
-? update server
+$ crontab -e
 
-
-________________________________________________________________________
+____________________________________________________________________________
 // CONFIGS + PACKAGES INSTALADOS
 
 teclado PT
