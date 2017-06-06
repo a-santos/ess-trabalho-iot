@@ -4,6 +4,7 @@
 $ /home/pi/ess_trab_webserver   			(plataforma web)
 $ /home/pi/ess_trab_server  				(scripts do server: broker MQTT, sockets, envia IFTTT)
 
+
 # NETWORKS
 SSID: droid_wlan / WlanDr01d16
 
