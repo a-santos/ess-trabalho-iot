@@ -13,7 +13,7 @@ const char* ssid     = "droid_wlan";
 const char* password = "WlanDr01d16";
 
 // Change the variable to your Raspberry Pi IP address, so it connects to your MQTT broker
-const char* mqtt_server = "10.20.138.127";
+const char* mqtt_server = "10.20.138.127";     // IP do srv-PI
 
 WiFiClient espClient;
 PubSubClient client(espClient);

@@ -7,6 +7,9 @@
 import paho.mqtt.client as mqtt
 from flask import Flask, render_template, request
 from flask_socketio import SocketIO, emit
+import requests
+
+url_recipe_door = 'https://maker.ifttt.com/trigger/door_status/with/key/dh0w-_fzIG-x02VrAHNnpa';
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
@@ -27,7 +30,13 @@ def on_message(client, userdata, message):
         + message.topic + "' with QoS " + str(message.qos))
     if message.topic == "/esp8266/doorStatus":
         print("doorStatus update")
-        socketio.emit('sensorMag', {'data': message.payload}) 
+        socketio.emit('sensorMag', {'data': message.payload})
+
+        
+        report = {}
+        report["value1"] = str(message.qos)
+        requests.post(url_recipe_door, data = report)
+
 
 mqttc = mqtt.Client()
 mqttc.on_connect = on_connect

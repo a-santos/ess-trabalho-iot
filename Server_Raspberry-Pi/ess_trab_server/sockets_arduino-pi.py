@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Criar e ficar à escuta de num socket
 # @status: ok 
 

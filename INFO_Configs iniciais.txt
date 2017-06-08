@@ -1,0 +1,8 @@
+RASPBERRY PI:
+
+- Por a correr serviço MQTT
+$ mosquitto -d  (colocado no rc.local - boot)
+
+- Correr script que recebe dados do Node e envia para pág. web
+$ sudo python mqtt-broker_node-pi.py  
+

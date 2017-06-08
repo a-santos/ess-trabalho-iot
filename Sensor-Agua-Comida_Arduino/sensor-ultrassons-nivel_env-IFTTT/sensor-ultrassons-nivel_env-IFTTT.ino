@@ -1,8 +1,7 @@
 /** 
 @ info: Programa para medir nível da água e quantidade de comida 
-    (cód. IFTTT comentado) 
 @ material: Arduino, sensor de nível, sensor de ultrassons
-@ status: ok
+@ status: test
 */
 
 /** 
@@ -26,6 +25,9 @@ Echo -> Pin 5
 S -> A0 (Arduino)
 */
 
+#include <SPI.h>
+#include <Ethernet.h>
+
 const char* ssid = "droid_wlan";        
 const char* password = "WlanDr01d16";
 const char* HOST = "maker.ifttt.com";
@@ -48,7 +50,24 @@ const int PIN_US_TRIG = 3;
 const int PIN_US_ECHO = 5;
 const int VEL_US_AR = 343;        // vel. propagação dos ultrassons no ar = 343 m/s
 
+// Enter a MAC address for your controller below.
+// Newer Ethernet shields have a MAC address printed on a sticker on the shield
+byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
+// if you don't want to use DNS (and reduce your sketch size)
+// use the numeric IP instead of the name for the server:
+//IPAddress server(74,125,232,128);  // numeric IP for Google (no DNS)
+char server[] = "192.168.246.145";    // IP na droid_wlan
+
+// Set the static IP address to use if the DHCP fails to assign
+IPAddress ip(192, 168, 0, 199);
+
+// Initialize the Ethernet client library
+// with the IP address and port of the server
+// that you want to connect to (port 80 is default for HTTP):
+EthernetClient client;
+
 void setup() {
+  // Open serial communications and wait for port to open:
   Serial.begin(9600);             // definir a vel. de comunicação na porta consola
   
   pinMode(PIN_LED_AGUA, OUTPUT); 
@@ -59,11 +78,43 @@ void setup() {
   
   digitalWrite(PIN_US_TRIG, LOW);
   delayMicroseconds(2);
+
+  while (!Serial) {
+    ; // wait for serial port to connect. Needed for native USB port only
+  }
+
+  // start the Ethernet connection:
+  if (Ethernet.begin(mac) == 0) {
+    Serial.println("Failed to configure Ethernet using DHCP");
+    // try to congifure using IP address instead of DHCP:
+    Ethernet.begin(mac, ip);
+  }
+  // give the Ethernet shield a second to initialize:
+  delay(1000);
+  Serial.println("connecting...");
+
+  // if you get a connection, report back via serial:
+  if (client.connect(server, 80)) {
+    Serial.println("connected");
+    // Make a HTTP request:
+    //client.println("GET /search?q=arduino HTTP/1.1");
+    //client.println("Host: 192.246.145");
+    //client.println("sou o Arduino do Afonso");
+    client.println("Connection: close");
+    client.println();
+  } else {
+    // if you didn't get a connection to the server:
+    Serial.println("connection failed");
+  }
 }
 
 void loop() {
-  long duration = 0;
-  float distance = 0.0;
+  // if there are incoming bytes available
+  // from the server, read them and print them:
+  if (client.available()) {
+    char c = client.read();
+    Serial.print(c);
+  }
 
   // ********************** Água - Ler nível ********************** 
   val = analogRead(PIN_SENSOR_NIVEL);     
@@ -77,21 +128,6 @@ void loop() {
   // ********************** Água - Calc. percentagem ********************** 
   data = val;                           
   percentAgua = (data * 100) / 400;
-
-  // ********************** Comida - Ler distância **********************
-  digitalWrite(PIN_US_TRIG, HIGH);
-  delayMicroseconds(10);
-  digitalWrite(PIN_US_TRIG, LOW);
-
-  duration = pulseIn(PIN_US_ECHO, HIGH);
-  //Serial.print(duration); //
-  //Serial.println(" Microssegundos");
-
-  distance = (((float)duration * (float)VEL_US_AR) / 2.0) / 10000.0;    // cálculos para mostrar em 'cm'
-
-  delay(500);
-
-  
 
   // ********************** Água - Mostrar valores no terminal ********************** 
   Serial.println("");
@@ -109,29 +145,15 @@ void loop() {
     digitalWrite(PIN_LED_AGUA, HIGH); 
     newValAgua = 1;
   }
-    
-  // ********************** Comida - Mostrar valores no terminal **********************
-  Serial.println("");
-  Serial.print("[COMIDA] Distancia: ");
-  Serial.print(distance); 
-  Serial.println(" cm");
-  if (distance >= 10) {
-    Serial.println("[COMIDA] Quantidade insuficiente");
-    digitalWrite(PIN_LED_COMIDA, HIGH); 
-  }
-  else {
-    Serial.println("[COMIDA] Quantidade suficiente");
-    digitalWrite(PIN_LED_COMIDA, LOW); 
-  }
-  
+
   // Ligação à porta 80 HTTP
-  /*const int httpPort = 80;
+  const int httpPort = 80;
   if (!client.connect(host, httpPort)) {
     Serial.println("connection failed");
     return;
-  }*/
+  }
   
-  /*if (percentAgua > 30) {
+  if (percentAgua > 30) {
     Serial.println("O nivel esta alto");
     digitalWrite(PIN_LED_COMIDA, LOW); 
     newValAgua = 0;
@@ -139,9 +161,9 @@ void loop() {
   else {
     Serial.println("nivel baixo");
     digitalWrite(PIN_LED_COMIDA, HIGH); 
-    newValAgua = 1;*/
+    newValAgua = 1;
 
-    /*
+    
     String url = "/trigger/water_empty/with/key/";
     url += API_KEY;
     //Serial.println(host);
@@ -153,10 +175,10 @@ void loop() {
                 "Content-Type: application/x-www-form-urlencoded\r\n" + 
                 "Content-Length: 13\r\n\r\n" +
                 "value1=" + water_empty + "\r\n");                  
-  }*/ 
+  }
 
   // ********************** Água - Mostra se valor atual é diferente do anterior **********************
-  /*if (newValAgua != oldValAgua) {      
+  if (newValAgua != oldValAgua) {      
     Serial.println("MUDOU");
     Serial.println("");
     oldValAgua = newValAgua;
@@ -164,7 +186,36 @@ void loop() {
   else {
     Serial.println("IGUAL");
     Serial.println("");   
+  }
+
+  Serial.println("FIM LOOP");
+  delay(4000); 
+
+
+  
+  
+  /*int num = 999;
+  if (client.connected()) {
+    Serial.println();
+    Serial.println(num);
+    Serial.println("LOOP.");
+    
+    client.println(num);
+    client.println("LOOP");
+    client.stop();
   }*/
 
-  delay(4000);   
+  // if the server's disconnected, stop the client:
+  /*if (!client.connected()) {
+    Serial.println();
+    Serial.println(num);
+    Serial.println("disconnecting.");
+    
+    client.println(num);
+    client.println("LOOP");
+    client.stop();
+
+    // do nothing forevermore:
+    while (true);
+  }*/
 }

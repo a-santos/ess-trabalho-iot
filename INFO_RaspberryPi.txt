@@ -4,7 +4,6 @@
 $ /var/www/html   							(plataforma web)
 $ /home/pi/ess_trab_server  				(scripts do server: broker MQTT, sockets, envia IFTTT)
 $ /home/pi/ess_trab_data  					(onde são guardados enviados pelos sensores)
-$ /home/pi/ess_trab_server/twitter_post  	(portar no Twitter)
 
 # NETWORKS
 SSID: droid_wlan / WlanDr01d16
@@ -12,7 +11,6 @@ SSID: droid_wlan / WlanDr01d16
 # SITES
 URL da plataforma: http://192.168.1.78/index.html         (rede Afonso)
 Repositório: https://github.com/a-santos/ess-trabalho-iot
-** Twitter: https://twitter.com/desmondd_io  
 
 # INTERFACES
 MAC wlan0: ?
