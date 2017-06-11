@@ -1,7 +1,6 @@
 /** 
 @ info: Programa para medir nível da água e quantidade de comida 
 @ material: Arduino, sensor de nível, sensor de ultrassons
-@ status: test
 */
 
 /** 
@@ -188,34 +187,5 @@ void loop() {
     Serial.println("");   
   }
 
-  Serial.println("FIM LOOP");
   delay(4000); 
-
-
-  
-  
-  /*int num = 999;
-  if (client.connected()) {
-    Serial.println();
-    Serial.println(num);
-    Serial.println("LOOP.");
-    
-    client.println(num);
-    client.println("LOOP");
-    client.stop();
-  }*/
-
-  // if the server's disconnected, stop the client:
-  /*if (!client.connected()) {
-    Serial.println();
-    Serial.println(num);
-    Serial.println("disconnecting.");
-    
-    client.println(num);
-    client.println("LOOP");
-    client.stop();
-
-    // do nothing forevermore:
-    while (true);
-  }*/
 }

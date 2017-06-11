@@ -1,11 +1,14 @@
-# ESS - TRABALHO II - 2017 #
+# ESS - TRABALHO II - Projeto de uma solução IoT - 2017 #
 
 * Curso: Eng. Informática - IPLeiria
-* UC: ESS
 * Ramo: TI
 
 
-### Desenvolvido por ### 
+# Disciplina: Engenharia de Sistemas e Serviços (ESS) 
+* Professor: António Pereira
+
+
+# Desenvolvido por:
 * Gonçalo Santos - 2120657
 * Afonso Santos - 2130653
 * Pedro Nascimento - 2131242

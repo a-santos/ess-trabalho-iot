@@ -1,8 +1,8 @@
 #include <ESP8266WiFi.h>
 #include <PubSubClient.h>
 
-// ATENÇÃO: Executar comando no PI para serviço MQTT correr em background
-// $ mosquito -d
+/* ATENÇÃO: Executar comando no PI para serviço MQTT correr em background
+   $ mosquito -d    */
 
 int sensorPin = 0;    
 int sensorValue = 0;      

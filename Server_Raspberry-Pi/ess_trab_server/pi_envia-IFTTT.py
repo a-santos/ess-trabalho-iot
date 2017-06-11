@@ -2,12 +2,6 @@
 # -*- coding: utf-8 -*-
 
 # Consoante os dados, comunica com IFTTT
-# @status: test - env os 2 pedidos?
-#       fz 2 envios diferentes (água, comida)
-#       optimizar: só enviar qd != do val. anterior
-
-# IFTTT: Applet title- Pet food level
-#        Event name- pouca_comida
 
 import requests
 

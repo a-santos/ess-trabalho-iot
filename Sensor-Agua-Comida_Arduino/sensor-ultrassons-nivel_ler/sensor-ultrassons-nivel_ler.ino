@@ -1,8 +1,6 @@
 /** 
 @ info: Programa para medir nível da água e quantidade de comida 
-    (cód. IFTTT comentado) 
 @ material: Arduino, sensor de nível, sensor de ultrassons
-@ status: ok
 */
 
 /** 
@@ -125,13 +123,13 @@ void loop() {
   }
   
   // Ligação à porta 80 HTTP
-  /*const int httpPort = 80;
+  const int httpPort = 80;
   if (!client.connect(host, httpPort)) {
     Serial.println("connection failed");
     return;
-  }*/
+  }
   
-  /*if (percentAgua > 30) {
+  if (percentAgua > 30) {
     Serial.println("O nivel esta alto");
     digitalWrite(PIN_LED_COMIDA, LOW); 
     newValAgua = 0;
@@ -139,9 +137,8 @@ void loop() {
   else {
     Serial.println("nivel baixo");
     digitalWrite(PIN_LED_COMIDA, HIGH); 
-    newValAgua = 1;*/
+    newValAgua = 1;
 
-    /*
     String url = "/trigger/water_empty/with/key/";
     url += API_KEY;
     //Serial.println(host);
@@ -153,10 +150,10 @@ void loop() {
                 "Content-Type: application/x-www-form-urlencoded\r\n" + 
                 "Content-Length: 13\r\n\r\n" +
                 "value1=" + water_empty + "\r\n");                  
-  }*/ 
+  }
 
   // ********************** Água - Mostra se valor atual é diferente do anterior **********************
-  /*if (newValAgua != oldValAgua) {      
+  if (newValAgua != oldValAgua) {      
     Serial.println("MUDOU");
     Serial.println("");
     oldValAgua = newValAgua;
@@ -164,7 +161,7 @@ void loop() {
   else {
     Serial.println("IGUAL");
     Serial.println("");   
-  }*/
+  }
 
   delay(4000);   
 }

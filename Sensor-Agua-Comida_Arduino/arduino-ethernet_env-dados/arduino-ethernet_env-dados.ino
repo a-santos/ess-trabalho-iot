@@ -1,10 +1,6 @@
 /** 
-@ info: Programa para medir nível da água e quantidade de comida 
-    (cód. IFTTT comentado) 
 @ material: Arduino, shield Ethernet, sensor de nível, sensor de ultrassons
-@ status: test
-    configurar qd cd sensor lê (e imprime valores)
-    https://www.arduino.cc/en/Tutorial/WebClient
+https://www.arduino.cc/en/Tutorial/WebClient
 */
 
 #include <SPI.h>
@@ -15,8 +11,8 @@
 byte mac[] = { 0xDE, 0xAD, 0xBE, 0xEF, 0xFE, 0xED };
 // if you don't want to use DNS (and reduce your sketch size)
 // use the numeric IP instead of the name for the server:
-//IPAddress server(74,125,232,128);  // numeric IP for Google (no DNS)
-char server[] = "192.168.246.145";    // IP na droid_wlan
+//IPAddress server(74,125,232,128);       // numeric IP for Google (no DNS)
+char server[] = "192.168.246.145";        // IP na droid_wlan
 
 // Set the static IP address to use if the DHCP fails to assign
 IPAddress ip(192, 168, 0, 199);
@@ -69,26 +65,18 @@ void loop() {
   int num = 999;
 
   if (client.connected()) {
-    Serial.println();
-    Serial.println(num);
-    Serial.println("LOOP.");
-    
     client.println(num);
     client.println("LOOP");
     client.stop();
   }
 
   // if the server's disconnected, stop the client:
-  /*if (!client.connected()) {
+  if (!client.connected()) {
     Serial.println();
     Serial.println(num);
     Serial.println("disconnecting.");
-    
-    client.println(num);
-    client.println("LOOP");
-    client.stop();
 
     // do nothing forevermore:
     while (true);
-  }*/
+  }
 }
